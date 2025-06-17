@@ -1,468 +1,76 @@
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Roll Number Assigner</title>
-    
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    
+
     <link href="https://fonts.googleapis.com/css2?family=Maven+Pro&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
-    
-    <style>
-        
-        body {
-            background: rgb(2,0,36);
-background: radial-gradient(circle, rgba(2,0,36,1) 29%, rgba(28,145,169,1) 91%);
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            font-family: 'Maven Pro', sans-serif;
-        }
-        
-        .container {
-            background: rgb(87 230 187 / 20%);
-            border-radius: 20px;
-            padding: 20px;
-            width: 90%;
-            max-width: 510px;
-            margin: 20px;
-            color: white;
-            text-align: center;
-            backdrop-filter: blur(10px);
-        }
-        
-        .input-group {
-            margin-bottom: 15px;
-        }
 
-        .button-group {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 20px;
-        }
-
-        .names-list {
-            text-align: left;
-        }
-
-        .flex-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh; /* Ensures the container takes up the full viewport height */
-       }
-
-        .sorted-names {
-            background: rgb(87 230 187 / 20%);
-            color: white;
-            padding: 20px;
-            border-radius: 20px;
-            text-align: left;
-            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
-            width: 90%;
-            max-width: 510px;
-            margin: auto;
-        }
-
-        .sorted-names h2 {
-            font-size: 20px;
-            margin-bottom: 10px;
-        }
-
-        .sorted-names ul {
-            list-style: none;
-            padding: 0;
-            max-height: 300px;
-            overflow-y: auto;
-        }
-
-        .sorted-names li {
-            display: flex;
-            justify-content: space-between;
-            align-items: center; /* Vertically align the text and edit svg */
-            margin-bottom: 5px;
-        }
-
-        .make-changes-button {
-            display: block;
-            width: 100%;
-            background-color: #3182ce;
-            color: white;
-            border: none;
-            padding: 10px 0;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: background-color 0.3s;
-        }
-
-        .make-changes-button:hover {
-            background-color: #2766b8;
-        }
-
-        .sort-button,
-        .clear-button,
-        .clear-all-button {
-            background-color: #4caf50;
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: background-color 0.3s;
-            margin-top: 10px;
-        }
-
-        .sort-button:disabled,
-        .clear-button:disabled,
-        .clear-all-button:disabled {
-            background-color: #7c7c7c;
-            cursor: not-allowed;
-        }
-
-        .sort-button:hover:enabled,
-        .clear-button:hover:enabled,
-        .clear-all-button:hover:enabled {
-            background-color: #45a049;
-        }
-
-        .clear-button.active {
-            background-color: #ff8c00; /* Light orange */
-        }
-
-        .clear-all-button.active {
-            background-color: #ff6b6b; /* Light red */
-        }
-
-        .edit-svg {
-            display: none;
-            cursor: pointer;
-        }
-
-        .names-list-item:hover .edit-svg {
-            display: inline;
-        }
-
-        .edit-svg:hover {
-            fill: #3182ce;
-        }
-
-
-        .card-buttons {
-            display: flex;
-    justify-content: center; /* Center horizontally */
-    margin-top: 10px;
-        }
-
-
-        .make-changes-button {
-    display: inline-block;
-    width: auto; /* Decrease width */
-    background-color: #3182ce;
-    color: white;
-    border: none;
-    padding: 10px 15px; /* Decrease padding */
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s, color 0.3s; /* Add transition for hover effect */
-    margin: 10px; /* Add margin between buttons */
-}
-
-.make-changes-button:hover {
-    background-color: #1e4f8c; /* Darker color on hover */
-    color: #fff; /* White text on hover */
-}
-
-.copy-button {
-    display: flex; /* Use flexbox */
-    align-items: center; /* Vertically align the text and icon */
-    width: auto; /* Decrease width */
-    background-color: #2c3e50; /* Dark background color */
-    color: #ecf0f1; /* Light text color */
-    border: none;
-    padding: 10px 15px; /* Decrease padding */
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s, color 0.3s; /* Add transition for hover effect */
-    margin: 10px;
-}
-
-.copy-button:hover {
-    background-color: #1a252f; /* Darker color on hover */
-    color: #ecf0f1; /* Light text color on hover */
-}
-
-.copy-button span {
-    margin-right: 10px; /* Add spacing between text and icon */
-}
-
-/* Add transition for the Edit SVG */
-.edit-svg {
-    transition: fill 0.3s;
-}
-
-/* Add transition for buttons */
-.button-group button {
-    transition: background-color 0.3s, color 0.3s;
-}
-
-/* Add fade-in animation to the alert modal */
-#alertModal {
-    animation: fadeIn 0.6s ease-in-out;
-}
-
-#continueButton {
-    background: linear-gradient(109.6deg, rgb(11, 132, 145) 11.2%, rgb(0, 0, 0) 91.1%);
-}
-
-/* Add transition for the continue button in the alert modal */
-#continueButton:hover {
-    background: linear-gradient(109.6deg, rgb(0, 0, 0) 11.2%, rgb(11, 132, 145) 91.1%);
-}
-
-/* Keyframes for fade-in animation */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
-
-/* Add hover effect for sorted names list items */
-.sorted-names li:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-    padding: 3px;
-    border-radius: 5px;
-}
-
-.sorted-names{
-    animation: fadeIn 0.8s ease-in-out;
-}
-
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
-    
+
 <body>
 
     <div class="flex-container">
-    <div class="container">
-    <h1 class="text-3xl mb-6">Roll Number Assigner</h1>
+        <div class="container">
+            <h1 class="text-3xl mb-6">Roll Number Assigner</h1>
 
-    <div class="input-group">
-        <label for="name" style="margin-top: 10px;">Names (SurName_FirstName_LastName)</label>
-        <textarea id="name" class="block w-full p-2 rounded bg-transparent border border-gray-300 focus:border-blue-500" rows="3"></textarea>
+            <div class="input-group">
+                <label for="name" style="margin-top: 10px;">Names (SurName_FirstName_LastName)</label>
+                <textarea id="name"
+                    class="block w-full p-2 rounded bg-transparent border border-gray-300 focus:border-blue-500"
+                    rows="3"></textarea>
+            </div>
+
+            <button id="addButton"
+                class="block w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600">Add</button>
+
+            <div class="names-list" id="namesList"></div>
+
+            <div class="button-group">
+                <button id="sortButton" class="sort-button" disabled>Sort Names</button>
+                <button id="clearButton" class="clear-button" disabled>Clear</button>
+                <button id="clearAllButton" class="clear-all-button" disabled>Clear All</button>
+            </div>
+        </div>
+
+        <div class="sorted-names hidden mt-6" id="sortedNames">
+            <h2 class="text-2xl mb-2">Sorted Names:</h2>
+            <ul id="sortedList"></ul>
+            <div class="card-buttons">
+                <div class="button-group">
+                    <button id="changesButton" class="make-changes-button">Make Changes</button>
+                    <button id="copyButton" class="copy-button">
+                        <span>Copy</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 011.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 00-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 01-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5a3.375 3.375 0 00-3.375-3.375H9.75" />
+                        </svg>
+                    </button>
+
+                </div>
+            </div>
+        </div>
     </div>
-    
-    <button id="addButton" class="block w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600">Add</button>
 
-    <div class="names-list" id="namesList"></div>
 
-    <div class="button-group">
-        <button id="sortButton" class="sort-button" disabled>Sort Names</button>
-        <button id="clearButton" class="clear-button" disabled>Clear</button>
-        <button id="clearAllButton" class="clear-all-button" disabled>Clear All</button>
+    <!-- Alert Modal -->
+    <div class="fixed z-50 inset-0 flex justify-center items-center" id="alertModal" style="display: none;">
+        <div class="bg-white p-6 rounded shadow-lg text-center">
+            <p class="mb-4">All The Names Will Be Sorted In Alphabetical Order With Respect To SurName.</p>
+            <button id="continueButton"
+                class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Continue</button>
+        </div>
     </div>
-</div>
 
-<div class="sorted-names hidden mt-6" id="sortedNames">
-    <h2 class="text-2xl mb-2">Sorted Names:</h2>
-    <ul id="sortedList"></ul>
-    <div class="card-buttons">
-    <div class="button-group">
-        <button id="changesButton" class="make-changes-button">Make Changes</button>
-<button id="copyButton" class="copy-button">
-    <span>Copy</span>
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 011.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 00-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 01-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5a3.375 3.375 0 00-3.375-3.375H9.75" />
-    </svg>
-</button>
-
-    </div>
-    </div>
-</div>
-</div>
-
-
-<!-- Alert Modal -->
-<div class="fixed z-50 inset-0 flex justify-center items-center" id="alertModal" style="display: none;">
-    <div class="bg-white p-6 rounded shadow-lg text-center">
-        <p class="mb-4">All The Names Will Be Sorted In Alphabetical Order With Respect To SurName.</p>
-        <button id="continueButton" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Continue</button>
-    </div>
-</div>
-
-<script>
-    const names = [];
-    let rollNumber = 1;
-    const addButton = document.getElementById('addButton');
-    const sortButton = document.getElementById('sortButton');
-    const clearButton = document.getElementById('clearButton');
-    const clearAllButton = document.getElementById('clearAllButton');
-    const changesButton = document.getElementById('changesButton');
-    const namesList = document.getElementById('namesList');
-    const sortedNames = document.getElementById('sortedNames');
-    const sortedList = document.getElementById('sortedList');
-
-    addButton.addEventListener('click', () => {
-        const nameText = document.getElementById('name').value.trim();
-        const nameLines = nameText.split('\n').filter(line => line.trim() !== '');
-
-        if (nameLines.length > 0) {
-            for (const name of nameLines) {
-                const uppercaseName = name.toUpperCase();
-                names.push(uppercaseName);
-
-                const nameItem = document.createElement('div');
-                nameItem.classList.add('names-list-item');
-                nameItem.innerHTML = `<p>${uppercaseName}<svg class= "edit-svg" xmlns="http://www.w3.org/2000/svg" height="25" width="25" viewBox="0 0 20 24" fill="currentColor" class="w-6 h-6">
-  <path d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-8.4 8.4a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32l8.4-8.4z" />
-  <path d="M5.25 5.25a3 3 0 00-3 3v10.5a3 3 0 003 3h10.5a3 3 0 003-3V13.5a.75.75 0 00-1.5 0v5.25a1.5 1.5 0 01-1.5 1.5H5.25a1.5 1.5 0 01-1.5-1.5V8.25a1.5 1.5 0 011.5-1.5h5.25a.75.75 0 000-1.5H5.25z" />
-</svg>
-</p>`;
-                namesList.appendChild(nameItem);
-
-                const editSvg = nameItem.querySelector('.edit-svg');
-                editSvg.addEventListener('click', () => {
-                    const newName = prompt("Edit the name:", uppercaseName);
-                    if (newName !== null) {
-                        const editedName = newName.trim().toUpperCase();
-                        names[names.indexOf(uppercaseName)] = editedName;
-                        nameItem.innerHTML = `<p>${editedName}<svg class= "edit-svg" xmlns="http://www.w3.org/2000/svg" height="25" width="25" viewBox="0 0 20 24" fill="currentColor" class="w-6 h-6">
-  <path d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-8.4 8.4a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32l8.4-8.4z" />
-  <path d="M5.25 5.25a3 3 0 00-3 3v10.5a3 3 0 003 3h10.5a3 3 0 003-3V13.5a.75.75 0 00-1.5 0v5.25a1.5 1.5 0 01-1.5 1.5H5.25a1.5 1.5 0 01-1.5-1.5V8.25a1.5 1.5 0 011.5-1.5h5.25a.75.75 0 000-1.5H5.25z" />
-</svg>
-</p>`;
-                    }
-                });
-            }
-
-            document.getElementById('name').value = '';
-
-            if (names.length >= 2) {
-                sortButton.removeAttribute('disabled');
-            }
-
-            clearButton.removeAttribute('disabled');
-            clearAllButton.removeAttribute('disabled');
-            clearButton.classList.add('active'); // Add active class
-            clearAllButton.classList.add('active'); // Add active class
-        }
-    });
-
-    sortButton.addEventListener('click', () => {
-        if (names.length === 0) {
-            const nameText = document.getElementById('name').value.trim();
-            if (nameText === '') {
-                alert("Please enter at least one name to sort.");
-                return;
-            }
-        }
-        
-    });
-
-    sortButton.addEventListener('click', () => {
-        sortedList.innerHTML = '';
-        sortButton.setAttribute('disabled', 'true');
-        clearButton.setAttribute('disabled', 'true');
-        clearAllButton.setAttribute('disabled', 'true');
-
-        if (rollNumber > 1) {
-            rollNumber = 1;
-        }
-
-        names.sort();
-
-        sortedNames.classList.remove('hidden');
-        changesButton.scrollIntoView({ behavior: 'smooth' });
-
-        for (const name of names) {
-            const listItem = document.createElement('li');
-            listItem.textContent = `${rollNumber}. ${name}`;
-            sortedList.appendChild(listItem);
-            rollNumber++;
-        }
-    });
-
-    changesButton.addEventListener('click', () => {
-        sortedNames.classList.add('hidden');
-        sortButton.removeAttribute('disabled');
-        if (names.length > 0) {
-            clearButton.removeAttribute('disabled');
-            clearAllButton.removeAttribute('disabled');
-        }
-        clearButton.classList.add('active'); // Add active class
-        clearAllButton.classList.add('active'); // Add active class
-    });
-
-    clearButton.addEventListener('click', () => {
-        if (names.length > 0) {
-            names.pop();
-            namesList.removeChild(namesList.lastChild);
-            rollNumber--;
-            if (names.length === 0) {
-                clearButton.setAttribute('disabled', 'true');
-                clearAllButton.setAttribute('disabled', 'true');
-                clearButton.classList.remove('active'); // Remove active class
-                clearAllButton.classList.remove('active'); // Remove active class
-            }
-        }
-    });
-
-    clearAllButton.addEventListener('click', () => {
-        namesList.innerHTML = '';
-        names.length = 0;
-        clearButton.setAttribute('disabled', 'true');
-        clearAllButton.setAttribute('disabled', 'true');
-        clearButton.classList.remove('active'); // Remove active class
-        clearAllButton.classList.remove('active'); // Remove active class
-    })
-
-    // Additional script for the alert modal
-    const alertModal = document.getElementById('alertModal');
-    const continueButton = document.getElementById('continueButton');
-
-    continueButton.addEventListener('click', () => {
-        alertModal.style.display = 'none';
-        sortButton.removeAttribute('disabled');
-    });
-
-    window.addEventListener('load', () => {
-        alertModal.style.display = 'flex';
-    });
-
-    continueButton.addEventListener('click', () => {
-        alertModal.style.display = 'none';
-        sortButton.removeAttribute('disabled');
-    });
-
-    window.addEventListener('load', () => {
-        alertModal.style.display = 'flex';
-    });
-
-    const copyButton = document.getElementById('copyButton');
-
-    copyButton.addEventListener('click', () => {
-        const sortedNamesText = names.map((name, index) => `${index + 1}. ${name}`).join('\n');
-        const tempTextArea = document.createElement('textarea');
-        tempTextArea.value = sortedNamesText;
-        document.body.appendChild(tempTextArea);
-        tempTextArea.select();
-        document.execCommand('copy');
-        document.body.removeChild(tempTextArea);
-        alert('Sorted names copied to clipboard!');
-    });
-
-</script>
-
+    <script src="script.js"></script>
 </body>
+
 </html>

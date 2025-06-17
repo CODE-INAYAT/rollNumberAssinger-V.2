@@ -1,0 +1,242 @@
+body {
+  background: rgb(2, 0, 36);
+  background: radial-gradient(
+    circle,
+    rgba(2, 0, 36, 1) 29%,
+    rgba(28, 145, 169, 1) 91%
+  );
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  font-family: "Maven Pro", sans-serif;
+}
+
+.container {
+  background: rgb(87 230 187 / 20%);
+  border-radius: 20px;
+  padding: 20px;
+  width: 90%;
+  max-width: 510px;
+  margin: 20px;
+  color: white;
+  text-align: center;
+  backdrop-filter: blur(10px);
+}
+
+.input-group {
+  margin-bottom: 15px;
+}
+
+.button-group {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.names-list {
+  text-align: left;
+}
+
+.flex-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.sorted-names {
+  background: rgb(87 230 187 / 20%);
+  color: white;
+  padding: 20px;
+  border-radius: 20px;
+  text-align: left;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
+  width: 90%;
+  max-width: 510px;
+  margin: auto;
+}
+
+.sorted-names h2 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.sorted-names ul {
+  list-style: none;
+  padding: 0;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.sorted-names li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.make-changes-button {
+  display: block;
+  width: 100%;
+  background-color: #3182ce;
+  color: white;
+  border: none;
+  padding: 10px 0;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+
+.make-changes-button:hover {
+  background-color: #2766b8;
+}
+
+.sort-button,
+.clear-button,
+.clear-all-button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+  margin-top: 10px;
+}
+
+.sort-button:disabled,
+.clear-button:disabled,
+.clear-all-button:disabled {
+  background-color: #7c7c7c;
+  cursor: not-allowed;
+}
+
+.sort-button:hover:enabled,
+.clear-button:hover:enabled,
+.clear-all-button:hover:enabled {
+  background-color: #45a049;
+}
+
+.clear-button.active {
+  background-color: #ff8c00;
+}
+
+.clear-all-button.active {
+  background-color: #ff6b6b;
+}
+
+.edit-svg {
+  display: none;
+  cursor: pointer;
+}
+
+.names-list-item:hover .edit-svg {
+  display: inline;
+}
+
+.edit-svg:hover {
+  fill: #3182ce;
+}
+
+.card-buttons {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.make-changes-button {
+  display: inline-block;
+  width: auto;
+  background-color: #3182ce;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s, color 0.3s;
+  margin: 10px;
+}
+
+.make-changes-button:hover {
+  background-color: #1e4f8c;
+  color: #fff;
+}
+
+.copy-button {
+  display: flex;
+  align-items: center;
+  width: auto;
+  background-color: #2c3e50;
+  color: #ecf0f1;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s, color 0.3s;
+  margin: 10px;
+}
+
+.copy-button:hover {
+  background-color: #1a252f;
+
+  color: #ecf0f1;
+}
+
+.copy-button span {
+  margin-right: 10px;
+}
+
+.edit-svg {
+  transition: fill 0.3s;
+}
+
+.button-group button {
+  transition: background-color 0.3s, color 0.3s;
+}
+
+#alertModal {
+  animation: fadeIn 0.6s ease-in-out;
+}
+
+#continueButton {
+  background: linear-gradient(
+    109.6deg,
+    rgb(11, 132, 145) 11.2%,
+    rgb(0, 0, 0) 91.1%
+  );
+}
+
+#continueButton:hover {
+  background: linear-gradient(
+    109.6deg,
+    rgb(0, 0, 0) 11.2%,
+    rgb(11, 132, 145) 91.1%
+  );
+}
+
+/* Keyframes for fade-in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+/* Add hover effect for sorted names list items */
+.sorted-names li:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 3px;
+  border-radius: 5px;
+}
+
+.sorted-names {
+  animation: fadeIn 0.8s ease-in-out;
+}
